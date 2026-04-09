@@ -67,29 +67,16 @@ function VistaSupervisor() {
                 proyecto: clienteProyecto
             });
 
-            const payload = resp.data;
+            const nuevaOrden = resp.data?.orden;
 
-            // Construimos una orden compatible con lo que espera la tabla
-            const nuevaOrden = {
-                id: payload.orden_id,
-                numero_orden: payload.numero_orden,
-                proyecto: payload.proyecto,
-                cantidad_planeada: Number(cantidadPlaneada),
-                estatus: "Planeada",
-                fecha_inicio: new Date().toISOString(),
-                fecha_fin: null,
-            };
-
-            const ordenConNombre = {
-                ...nuevaOrden,
-                clienteProyecto:
-                    nuevaOrden.clienteProyecto ||
-                    nuevaOrden.nombre ||
-                    nuevaOrden.cliente ||
-                    nuevaOrden.proyecto,
-            };
-
-            setOrdenes((prev) => [ordenConNombre, ...prev]);
+            if (nuevaOrden) {
+                // Adjuntamos el nombre de cliente/proyecto solo a nivel UI si existe
+                const ordenConNombre = {
+                    ...nuevaOrden,
+                    clienteProyecto: nuevaOrden.clienteProyecto || nuevaOrden.nombre || nuevaOrden.cliente || nuevaOrden.proyecto
+                };
+                setOrdenes((prev) => [ordenConNombre, ...prev]);
+            }
 
             setClienteProyecto("");
             setCantidadPlaneada("");
