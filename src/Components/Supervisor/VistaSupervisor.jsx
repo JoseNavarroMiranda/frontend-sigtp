@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Alert, Spinner } from "react-bootstrap";
 import { crearOrdenTrabajo, obtenerEstaciones, obtenerOrdenesTrabajo, obtenerEstadisticaOrden } from "../../services/supervisorService";
 import OrdenForm from "./OrdenForm";
@@ -7,6 +8,7 @@ import ControlPlanta from "./ControlPlanta";
 import DetalleOrden from "./DetalleOrden";
 
 function VistaSupervisor() {
+    const navigate = useNavigate();
     const [estaciones, setEstaciones] = useState([]);
     const [ordenes, setOrdenes] = useState([]);
     const [loadingInicial, setLoadingInicial] = useState(true);
@@ -96,6 +98,9 @@ function VistaSupervisor() {
             setCantidadPlaneada("");
             setEstacionSeleccionada("");
             alert("Orden de trabajo generada exitosamente");
+
+            // Aseguramos permanecer/redirigir al dashboard de supervisor
+            navigate("/supervisor", { replace: true });
 
         } catch (err) {
             setError(err.message || "Error al crear la orden de trabajo");
