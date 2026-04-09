@@ -67,22 +67,35 @@ function VistaSupervisor() {
                 proyecto: clienteProyecto
             });
 
-            const nuevaOrden = resp.data?.orden;
+            const payload = resp.data;
 
-            if (nuevaOrden) {
-                // Adjuntamos el nombre de cliente/proyecto solo a nivel UI si existe
-                const ordenConNombre = {
-                    ...nuevaOrden,
-                    clienteProyecto: nuevaOrden.clienteProyecto || nuevaOrden.nombre || nuevaOrden.cliente || nuevaOrden.proyecto
-                };
-                setOrdenes((prev) => [ordenConNombre, ...prev]);
-            }
+            // Construimos una orden compatible con lo que espera la tabla
+            const nuevaOrden = {
+                id: payload.orden_id,
+                numero_orden: payload.numero_orden,
+                proyecto: payload.proyecto,
+                cantidad_planeada: Number(cantidadPlaneada),
+                estatus: "Planeada",
+                fecha_inicio: new Date().toISOString(),
+                fecha_fin: null,
+            };
+
+            const ordenConNombre = {
+                ...nuevaOrden,
+                clienteProyecto:
+                    nuevaOrden.clienteProyecto ||
+                    nuevaOrden.nombre ||
+                    nuevaOrden.cliente ||
+                    nuevaOrden.proyecto,
+            };
+
+            setOrdenes((prev) => [ordenConNombre, ...prev]);
 
             setClienteProyecto("");
             setCantidadPlaneada("");
             setEstacionSeleccionada("");
             alert("Orden de trabajo generada exitosamente")
-            
+
         } catch (err) {
             setError(err.message || "Error al crear la orden de trabajo");
         } finally {
