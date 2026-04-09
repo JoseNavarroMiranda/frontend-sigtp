@@ -82,7 +82,7 @@ function VistaSupervisor() {
             setCantidadPlaneada("");
             setEstacionSeleccionada("");
             alert("Orden de trabajo generada exitosamente")
-
+            window.location.reload();
         } catch (err) {
             setError(err.message || "Error al crear la orden de trabajo");
         } finally {
