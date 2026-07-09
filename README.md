@@ -1,45 +1,73 @@
 # Frontend SIGTP
 
-Sistema de Gestión de Trazabilidad de Producción - Módulo frontend para la gestión y seguimiento de producción en línea SMT.
+Aplicación web del **Sistema de Gestión de Trazabilidad de Producción (SIGTP)**.  
+Este frontend permite autenticar usuarios y mostrar paneles operativos por rol para el seguimiento de producción SMT.
 
-## Tecnologías
+## ¿Qué hace este proyecto?
 
-- **React 19 + Vite**
-- **React Router DOM** - Navegación y rutas protegidas
-- **React Bootstrap** - UI components
+- Inicia sesión contra la API del sistema (`/api/sesiones/login`).
+- Redirige automáticamente a la vista correspondiente según el rol del usuario.
+- Protege rutas privadas con validación de token.
+- Cierra sesión por inactividad para reforzar seguridad.
+
+## Stack tecnológico
+
+- **React 19**
+- **Vite 8**
+- **React Router DOM**
+- **React Bootstrap + Bootstrap 5**
 - **Bootstrap Icons**
 
-## Vistas del sistema
+## Rutas principales
 
-| Ruta | Vista | Rol |
-|------|-------|-----|
-| `/` | Login | Todos |
-| `/operador` | Panel de producción | Operador |
-| `/calidad` | Inspección de calidad SMT | Calidad |
-| `/supervisor` | Control de planta | Supervisor |
-| `/gerencia` | Dashboard de gerencia | Gerencia |
-| `/perfil` | Perfil de usuario | Todos |
+| Ruta | Módulo/Vista | Acceso |
+|------|---------------|--------|
+| `/` | Login | Público |
+| `/operador` | Panel de operador | Protegido |
+| `/calidad` | Panel de calidad | Protegido |
+| `/supervisor` | Panel de supervisor | Protegido |
+| `/gerencia` | Panel de gerencia | Protegido |
+| `/perfil` | Perfil de usuario | Protegido |
 
-## Instalación
+## Estructura general
+
+```txt
+src/
+├─ Components/
+│  ├─ Auth/               # Protección de rutas
+│  ├─ LoginComponente/    # Pantalla y flujo de login
+│  ├─ Layout/             # Layout por rol y perfil
+│  ├─ Operador|Calidad|Supervisor|Gerencia/
+│  └─ Config/             # Configuración de menú/títulos por rol
+├─ hooks/                 # Hooks de lógica (ej. inactividad)
+├─ services/              # Comunicación con API (authService)
+└─ main.jsx               # Definición de rutas de la app
+```
+
+## Configuración de entorno
+
+Crear un archivo `.env` en la raíz del proyecto:
+
+```env
+VITE_API_URL="http://31.97.150.91"
+```
+
+> Todas las variables de entorno del frontend deben comenzar con `VITE_`.
+
+## Instalación y ejecución
 
 ```bash
 npm install
-```
-
-## Desarrollo
-
-```bash
 npm run dev
 ```
 
-## Convenciones
+La app queda disponible en la URL local que muestre Vite (por defecto `http://localhost:5173`).
 
-- Variables de entorno en archivo `.env` con prefijo `VITE_`
-- Lógica de negocio extraída en custom hooks dentro de `src/hooks/`
-- Estilos en línea o archivos separados (`*Styles.js`)
-- Componentes de UI en `src/Components/`
+## Scripts disponibles
 
-## Notas
-
-- No importar `bootstrap/dist/js/bootstrap.bundle.min.js` para evitar conflictos con React Bootstrap
-- Las rutas están protegidas por `RutaProtegida` que valida el token en localStorage
+```bash
+npm run dev      # Servidor de desarrollo
+npm run build    # Build de producción
+npm run preview  # Vista previa del build
+npm run lint     # Linter
+```
