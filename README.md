@@ -1,30 +1,45 @@
-# React + Vite
+# Frontend SIGTP
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema de Gestión de Trazabilidad de Producción - Módulo frontend para la gestión y seguimiento de producción en línea SMT.
 
-Currently, two official plugins are available:
+## Tecnologías
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 19 + Vite**
+- **React Router DOM** - Navegación y rutas protegidas
+- **React Bootstrap** - UI components
+- **Bootstrap Icons**
 
-## React Compiler
+## Vistas del sistema
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Ruta | Vista | Rol |
+|------|-------|-----|
+| `/` | Login | Todos |
+| `/operador` | Panel de producción | Operador |
+| `/calidad` | Inspección de calidad SMT | Calidad |
+| `/supervisor` | Control de planta | Supervisor |
+| `/gerencia` | Dashboard de gerencia | Gerencia |
+| `/perfil` | Perfil de usuario | Todos |
 
-## Expanding the ESLint configuration
+## Instalación
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+```
 
+## Desarrollo
 
-## Evitar errores con deploy a vercel
-evitar la importacion de libreria de bootstrap, debido a que el proyecto ya cuenta con instalacion de react-bootstrap
+```bash
+npm run dev
+```
 
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+## Convenciones
 
+- Variables de entorno en archivo `.env` con prefijo `VITE_`
+- Lógica de negocio extraída en custom hooks dentro de `src/hooks/`
+- Estilos en línea o archivos separados (`*Styles.js`)
+- Componentes de UI en `src/Components/`
 
+## Notas
 
-## Librerias que se han utiliado en este proyecto
-
-npm install react-router-dom
-npm install react-bootstrap
-npm install bootstrap
+- No importar `bootstrap/dist/js/bootstrap.bundle.min.js` para evitar conflictos con React Bootstrap
+- Las rutas están protegidas por `RutaProtegida` que valida el token en localStorage
