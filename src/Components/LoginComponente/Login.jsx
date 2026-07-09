@@ -48,7 +48,7 @@ function Login() {
       localStorage.setItem("token", token);
       localStorage.setItem("usuario", JSON.stringify(usuario));
 
-      console.log("👉 PASO 4: Datos extraídos. Token:", token, "Usuario:", usuario);
+      console.log("PASO 4: Datos extraídos. Token:", token, "Usuario:", usuario);
 
       sessionStorage.setItem("token", token);
       sessionStorage.setItem("usuario", JSON.stringify(usuario));
